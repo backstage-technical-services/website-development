@@ -1,0 +1,14 @@
+*
+
+# Scripts
+!.bin/*
+
+# IntelliJ
+!.idea/codeStyles/*
+.idea/*
+
+
+# Docker
+!.docker/init/*
+!.docker/data/*
+.env

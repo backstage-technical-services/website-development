@@ -1,0 +1,73 @@
+version: '2.4'
+
+networks:
+  main:
+
+services:
+  database:
+    image: postgres:${POSTGRES_VERSION}
+    container_name: bts-api-database
+    networks:
+      - main
+    ports:
+      - ${PORT_DATABASE}:5432
+    volumes:
+      - ./.docker/init/database:/docker-entrypoint-initdb.d
+      - ./.docker/data/database:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    restart: on-failure
+    mem_limit: 1g
+
+  keycloak:
+    image: jboss/keycloak:${KEYCLOAK_VERSION}
+    container_name: bts-api-keycloak
+    depends_on:
+      - database
+    networks:
+      - main
+    ports:
+      - ${PORT_KEYCLOAK}:8080
+    environment:
+      DB_VENDOR: postgres
+      DB_ADDR: database
+      DB_PORT: 5432
+      DB_DATABASE: keycloak
+      DB_USER: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: admin
+    restart: on-failure
+
+  mail:
+    image: djfarrelly/maildev
+    container_name: bts-api-mail
+    networks:
+      - main
+    expose:
+      - 25
+    ports:
+      - ${PORT_MAIL}:80
+    restart: on-failure
+    mem_limit: 50m
+
+#  api:
+#    build:
+#      context: laravel-api
+#      dockerfile: .docker/local/Dockerfile
+#      args:
+#        - USER_ID=1000
+#        - GROUP_ID=1000
+#    container_name: bts-api-laravel
+#    networks:
+#      - main
+#    ports:
+#      - ${PORT_LARAVEL_API}:8080
+#    volumes:
+#      - ../api:/var/www
+#    depends_on:
+#      - database
+#      - mail
+#    restart: always
+#    mem_limit: 512m
