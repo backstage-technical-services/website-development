@@ -1,18 +1,10 @@
 [
   {
-    "path": "laravel-api",
-    "url": "git@gitlab.com:backstage-technical-services/website/api.git"
-  },
-  {
     "path": "vue-spa",
-    "url": "git@gitlab.com:backstage-technical-services/website/vue.git"
+    "url": "git@gitlab.com:backstage-technical-services/website/vue-spa.git"
   },
   {
     "path": "quarkus-api",
     "url": "git@gitlab.com:backstage-technical-services/website/quarkus-api.git"
-  },
-  {
-    "path": "php-docker",
-    "url": "git@gitlab.com:backstage-technical-services/website/php-docker.git"
   }
 ]

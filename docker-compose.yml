@@ -17,6 +17,11 @@ services:
     environment:
       POSTGRES_USER: ${DB_USERNAME}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U postgres']
+      interval: 10s
+      timeout: 5s
+      retries: 5
     restart: on-failure
     mem_limit: 1g
 
@@ -24,7 +29,8 @@ services:
     image: jboss/keycloak:${KEYCLOAK_VERSION}
     container_name: bts-api-keycloak
     depends_on:
-      - database
+      database:
+        condition: service_healthy
     networks:
       - main
     ports:
@@ -38,6 +44,11 @@ services:
       DB_PASSWORD: ${DB_PASSWORD}
       KEYCLOAK_USER: admin
       KEYCLOAK_PASSWORD: admin
+    healthcheck:
+      test: ['CMD-SHELL','curl -s http://localhost:8080/auth/']
+      interval: 10s
+      timeout: 5s
+      retries: 5
     restart: on-failure
 
   mail:
@@ -45,29 +56,8 @@ services:
     container_name: bts-api-mail
     networks:
       - main
-    expose:
-      - 25
     ports:
-      - ${PORT_MAIL}:80
+      - ${PORT_MAIL_SMTP}:25
+      - ${PORT_MAIL_UI}:80
     restart: on-failure
     mem_limit: 50m
-
-#  api:
-#    build:
-#      context: laravel-api
-#      dockerfile: .docker/local/Dockerfile
-#      args:
-#        - USER_ID=1000
-#        - GROUP_ID=1000
-#    container_name: bts-api-laravel
-#    networks:
-#      - main
-#    ports:
-#      - ${PORT_LARAVEL_API}:8080
-#    volumes:
-#      - ../api:/var/www
-#    depends_on:
-#      - database
-#      - mail
-#    restart: always
-#    mem_limit: 512m
