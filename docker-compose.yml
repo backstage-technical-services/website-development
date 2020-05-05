@@ -61,3 +61,22 @@ services:
       - ${PORT_MAIL_UI}:80
     restart: on-failure
     mem_limit: 50m
+
+  api:
+    build:
+      context: quarkus-api
+      dockerfile: src/main/docker/Dockerfile.jvm
+    container_name: bts-api
+    networks:
+      - main
+    ports:
+      - ${PORT_API}:8080
+    environment:
+      QUARKUS_PROFILE: dev
+      DB_HOST: database
+      DB_PORT: 5432
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_DATABASE: backstage
+    restart: no
+    mem_limit: 512m
