@@ -1,12 +1,15 @@
 *
 
+# GitLab
+!.gitlab
+!.gitlab/*
+
 # Scripts
 !.bin/*
 
 # IntelliJ
 !.idea/codeStyles/*
 .idea/*
-
 
 # Docker
 !.docker/init/*
