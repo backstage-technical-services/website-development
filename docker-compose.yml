@@ -25,32 +25,6 @@ services:
     restart: on-failure
     mem_limit: 1g
 
-  keycloak:
-    image: jboss/keycloak:${KEYCLOAK_VERSION}
-    container_name: bts-api-keycloak
-    depends_on:
-      database:
-        condition: service_healthy
-    networks:
-      - main
-    ports:
-      - ${PORT_KEYCLOAK}:8080
-    environment:
-      DB_VENDOR: postgres
-      DB_ADDR: database
-      DB_PORT: 5432
-      DB_DATABASE: keycloak
-      DB_USER: ${DB_USERNAME}
-      DB_PASSWORD: ${DB_PASSWORD}
-      KEYCLOAK_USER: admin
-      KEYCLOAK_PASSWORD: admin
-    healthcheck:
-      test: ['CMD-SHELL','curl -s http://localhost:8080/auth/']
-      interval: 10s
-      timeout: 5s
-      retries: 5
-    restart: on-failure
-
   mail:
     image: djfarrelly/maildev
     container_name: bts-api-mail

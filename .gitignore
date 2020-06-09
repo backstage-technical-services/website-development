@@ -1,11 +1,11 @@
-*
+*/*
 
 # GitLab
 !.gitlab
 !.gitlab/*
 
 # Scripts
-!.bin/*
+!scripts/*
 
 # IntelliJ
 !.idea/codeStyles/*

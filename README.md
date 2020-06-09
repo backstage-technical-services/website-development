@@ -7,7 +7,6 @@ as well as some docker configuration for useful auxiliary services.
 
 This repository contains the configuration for the following "auxiliary" services to aid development:
 * PostgreSQL database
-* Keycloak (for authentication)
 * SMTP mail server
 
 ## Using this repository
@@ -15,13 +14,13 @@ The `repositories.json` file holds all the configuration - each repository has:
 * `path`: a directory relative to this repository where it should be cloned
 * `url`: the URL to use when cloning (SSH recommended)
 
-There are a couple of scripts in the `.bin` directory to help with managing all the repositories:
+There are a couple of scripts in the `scripts` directory to help with managing all the repositories:
  
-* Once you have cloned this repository, run `.bin/sync_repositories.sh` to clone all the configured repositories.
-If someone adds a new repository, simply pull the changes and run `.bin/sync_repositories.sh` again. 
+* Once you have cloned this repository, run `scripts/sync_repositories.sh` to clone all the configured repositories.
+If someone adds a new repository, simply pull the changes and run `scripts/sync_repositories.sh` again.
     > This will not overwrite any repositories you already have cloned
 * If you want to add a repository, you can either add an entry to the `repositories.json` file, or use the 
-`.bin/add_repository.sh` script. You can even do this for a repository you don't already have cloned, as it'll 
+`scripts/add_repository.sh` script. You can even do this for a repository you don't already have cloned, as it'll
 synchronise at the end.
 
 ## Running locally
