@@ -1,7 +1,7 @@
 [
   {
     "path": "vue-spa",
-    "url": "git@gitlab.com:backstage-technical-services/website/vue-spa.git"
+    "url": "git@github.com:backstage-technical-services/vue-spa.git"
   },
   {
     "path": "quarkus-api",
