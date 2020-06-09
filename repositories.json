@@ -5,6 +5,6 @@
   },
   {
     "path": "quarkus-api",
-    "url": "git@gitlab.com:backstage-technical-services/website/quarkus-api.git"
+    "url": "git@github.com:backstage-technical-services/quarkus-api.git"
   }
 ]
