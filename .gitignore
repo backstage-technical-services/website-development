@@ -1,4 +1,6 @@
-*/*
+# Repositories
+quarkus-api/
+vue-spa/
 
 # GitLab
 !.gitlab
@@ -8,8 +10,9 @@
 !scripts/*
 
 # IntelliJ
-!.idea/codeStyles/*
 .idea/*
+!.idea/codeStyles/*
+lsp/
 
 # Docker
 !.docker/init/*

@@ -2,11 +2,12 @@ version: '2.4'
 
 networks:
   main:
+    name: bts-v5
 
 services:
   database:
     image: postgres:${POSTGRES_VERSION}
-    container_name: bts-api-database
+    container_name: bts-v5-database
     networks:
       - main
     ports:
@@ -27,7 +28,7 @@ services:
 
   mail:
     image: djfarrelly/maildev
-    container_name: bts-api-mail
+    container_name: bts-v5-mail
     networks:
       - main
     ports:
@@ -35,22 +36,3 @@ services:
       - ${PORT_MAIL_UI}:80
     restart: on-failure
     mem_limit: 50m
-
-  api:
-    build:
-      context: quarkus-api
-      dockerfile: src/main/docker/Dockerfile.jvm
-    container_name: bts-api
-    networks:
-      - main
-    ports:
-      - ${PORT_API}:8080
-    environment:
-      QUARKUS_PROFILE: dev
-      DB_HOST: database
-      DB_PORT: 5432
-      DB_USERNAME: ${DB_USERNAME}
-      DB_PASSWORD: ${DB_PASSWORD}
-      DB_DATABASE: backstage
-    restart: no
-    mem_limit: 512m
