@@ -1,9 +1,16 @@
 # BTS Website Development
 
+> Make sure you are familiar with the [Contribution
+> Guide][contribution-guide] and [our tools][development-tools].
+
 This repository is intended to be the starting point for anyone who
 wants to get the BTS website running locally. It ensures that everything
 is set up as we'd expect, to help with debugging, and includes the
 necessary [auxiliary services](#running-the-auxiliary-services).
+
+## Pre-requisites
+
+Please make sure you have [installed the pre-requisites][prerequisites].
 
 ## Getting started
 
@@ -147,6 +154,9 @@ containers.
   $ docker-compose down  
   ```
 
+[prerequisites]: https://github.com/backstage-technical-services/hub/blob/master/docs/contributing/Developing.md#pre-requisites
+[contribution-guide]: https://github.com/backstage-technical-services/hub/blob/master/Contributing.md
+[development-tools]: https://github.com/backstage-technical-services/hub/blob/master/docs/Our%20Tools.md
 [slack]: https://bts-website.slack.com
 [smtp-ui]: http://localhost:6022
 
