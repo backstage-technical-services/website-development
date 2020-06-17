@@ -2,6 +2,10 @@
 repo_base_dir="$(pwd)/$(dirname $0)/.."
 cd "${repo_base_dir}"
 
+if [[ ! $(ssh-keygen -F github.com) ]]; then
+    ssh-keyscan -H github.com >> ~/.ssh/known_hosts &> /dev/null
+fi
+
 repository_file="repositories.json"
 
 for repository in $(jq -r '.[] | @base64' "${repository_file}"); do
