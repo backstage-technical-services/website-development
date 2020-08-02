@@ -10,7 +10,7 @@ necessary [auxiliary services](#running-the-auxiliary-services).
 
 ## Pre-requisites
 
-Please make sure you have [installed the pre-requisites][prerequisites].
+Please make sure you have [the pre-requisites set up][prerequisites].
 
 ## Getting started
 
