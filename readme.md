@@ -12,6 +12,10 @@ necessary [auxiliary services](#running-the-auxiliary-services).
 
 Please make sure you have [the pre-requisites set up][prerequisites].
 
+> **Note:** Until we have built a section to manage your user in the SPA
+> you can use [this page][keycloak-account] to manage some of your basic
+> account settings, including your password.
+
 ## Getting started
 
 To get started, simply navigate to where you want to download this
@@ -159,4 +163,5 @@ containers.
 [development-tools]: https://github.com/backstage-technical-services/hub/blob/master/docs/Our%20Tools.md
 [slack]: https://bts-website.slack.com
 [smtp-ui]: http://localhost:6022
+[keycloak-account]: https://keycloak.bts-crew.com/auth/realms/nonprod/account
 
