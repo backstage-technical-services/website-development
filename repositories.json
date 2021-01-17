@@ -1,0 +1,10 @@
+[
+  {
+    "path": "vue-spa",
+    "url": "git@github.com:backstage-technical-services/vue-spa.git"
+  },
+  {
+    "path": "quarkus-api",
+    "url": "git@github.com:backstage-technical-services/quarkus-api.git"
+  }
+]

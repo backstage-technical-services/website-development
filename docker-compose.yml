@@ -1,0 +1,38 @@
+version: '2.4'
+
+networks:
+  main:
+    name: bts-v5
+
+services:
+  database:
+    image: postgres:${POSTGRES_VERSION}
+    container_name: bts-v5-database
+    networks:
+      - main
+    ports:
+      - ${PORT_DATABASE}:5432
+    volumes:
+      - ./.docker/init/database:/docker-entrypoint-initdb.d
+      - ./.docker/data/database:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U developer']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: on-failure
+    mem_limit: 1g
+
+  mail:
+    image: djfarrelly/maildev
+    container_name: bts-v5-mail
+    networks:
+      - main
+    ports:
+      - ${PORT_MAIL_SMTP}:25
+      - ${PORT_MAIL_UI}:80
+    restart: on-failure
+    mem_limit: 50m
