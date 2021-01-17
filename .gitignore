@@ -1,0 +1,23 @@
+# General
+*
+!readme.md
+!.github/*
+
+# Repositories
+!repositories.json
+
+# Scripts
+!scripts/*
+
+# IntelliJ
+.idea/*
+!.idea/codeStyles/*
+lsp/
+
+# Docker
+!.docker/init/*
+!.docker/data/*
+.docker/data/database/*
+.env
+!docker-compose.yml
+!.env.example

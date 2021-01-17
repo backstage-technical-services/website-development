@@ -1,0 +1,54 @@
+version: '2.4'
+
+networks:
+  main:
+    name: bts-v4
+
+services:
+  database:
+    image: mariadb:${MARIADB_VERSION}
+    container_name: bts-v4-database
+    networks:
+      - main
+    ports:
+      - ${PORT_DATABASE}:3306
+    volumes:
+      - ./.docker/init/database:/docker-entrypoint-initdb.d
+      - ./.docker/data/database:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    restart: on-failure
+    mem_limit: 1g
+
+  mail:
+    image: djfarrelly/maildev
+    container_name: bts-v4-mail
+    networks:
+      - main
+    ports:
+      - ${PORT_MAIL_SMTP}:25
+      - ${PORT_MAIL_UI}:80
+    restart: on-failure
+    mem_limit: 50m
+
+  site:
+    build:
+      context: laravel-site
+      dockerfile: .docker/local.Dockerfile
+      args:
+        USER_ID: 1000
+        GROUP_ID: 1000
+    container_name: bts-v4-site
+    networks:
+      - main
+    ports:
+      - ${PORT_NGINX}:8080
+    volumes:
+      - ./laravel-site:/var/www
+    depends_on:
+      - database
+      - mail
+    restart: always
+    mem_limit: 512m
