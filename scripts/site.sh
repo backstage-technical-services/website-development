@@ -96,6 +96,7 @@ Generate an new access token with the read:packages scope from:
 Once generated, either export this in a GITHUB_TOKEN environment
 variable, or in a .github_token file.
 EOF
+  exit 1
   fi
 
   # Check for the GITHUB_USERNAME variable
@@ -106,6 +107,7 @@ No GitHub username specified.
 Export your GitHub username in the GITHUB_USERNAME environment
 variable.
 EOF
+  exit 1
   fi
 
   # Log into the registry and pull the base image
