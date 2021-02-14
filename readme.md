@@ -6,7 +6,7 @@
 This repository is intended to be the starting point for anyone who
 wants to get the BTS website running locally. It ensures that everything
 is set up as we'd expect, to help with debugging, and includes the
-necessary [auxiliary services](#running-the-auxiliary-services).
+necessary [auxiliary services](#auxiliary-services).
 
 ## Pre-requisites
 
@@ -36,7 +36,40 @@ $ scripts/sync.sh
 This will download the website into the correct folder, and help ensure
 everything is grouped together nicely.
 
-## Running the auxiliary services
+## Running the site
+
+To avoid needing to install and configure Nginx, PHP-FPM, Composer, NPM
+and Yarn this site includes a Docker container that includes all of this
+pre-build and pre-configured. This container creates a volume mount
+between `/var/www` (where the site is configured to be served from) and
+the `laravel-site` directory.This means that any changes you make
+locally are also changed in the docker container, without the need to
+re-build and restart the container.
+
+> A caveat to this is that the file watcher between your computer and
+> Docker can make your computer slow and can exceed the operating system
+> limit. This can sometimes be resolved by stopping and then starting
+> the container again.
+
+As you will not have PHP etc installed on your computer, any commands
+you need to perform to manage the site will need to be run on the Docker
+container. This repository also includes a
+[helpful script](scripts/site.sh) for managing the site:
+
+* `scripts/site.sh start` to start the site and auxiliary services.
+* `scripts/site.sh stop` to stop the site and auxiliary services.
+* `scripts/site.sh install` to install any dependencies.
+* `scripts/site.sh watch-assets` to build JS/CSS assets and
+  automatically re-build any changes.
+* `scripts/site.sh artisan COMMAND` to run any artisan command.
+* `scripts/site.sh test` to run any PHPUnit tests.
+* `scripts/site.sh update` to update your copy of the site and install
+  any new dependencies.
+* `scripts/site.sh rebuild` to rebuild the container (eg, if the version
+  of PHP changes).
+* `scripts/site.sh help` to see more information.
+
+## Auxiliary services
 
 This repository also contains the configuration for the required
 auxiliary services:
@@ -58,18 +91,6 @@ readme files.
 > GRANT ALL PRIVILEGES ON `backstage`.* TO 'developer'@'%';
 > ```
 
-Once the environment file is set up, you can start the services with
-
-```sh
-$ docker-compose up -d
-```
-
-You can stop them with
-
-```sh
-$ docker-compose stop
-```
-
 ### Connecting to the database
 
 The database is exposed on the `PORT_DATABASE` port (default `6011`) so
@@ -83,10 +104,8 @@ configure it with the following:
 
 ### Initialising the data
 
-The API will include the necessary config to initialise some test data,
-but if you want to use some data more akin to what will be used in
-production you can ask in [Slack][slack] and then use your database tool
-to import it.
+The site does not seed any dummy data, but you can ask in [Slack][slack]
+for some initial data and then use your database tool to import it.
 
 ### Resetting the data
 
@@ -110,74 +129,9 @@ You can connect to this SMTP server using the port `PORT_MAIL_SMTP` and
 view the interface at [http://localhost:6012][smtp-ui] (unless you've
 changed the value of `PORT_MAIL_UI` in your `.env` file).
 
-## Notes for running locally
-
-1. Make sure you've logged into the docker registry to download the base
-   image
-   * Create a personal token in GitHub
-
-     ```
-     Settings > Developer settings > Personal access tokens
-     ```
-   * Log into the registry
-
-     ```sh
-     $ echo "<token>" | docker login docker.pkg.github.com -u <github-username> --password-stdin
-     ```
-2. Make sure you configure your user ID and group ID
-   * Run `id $(whoami)`
-   * Set these as the `USER_ID` and `GROUP_ID` in `docker-compose.yml`
-3. Run it!
-    ```sh
-   $ docker-compose up -d
-    ```
-
-## Helpful commands
-
-Here are some helpful commands for interacting with the docker
-containers.
-
-
-* Start a service
-
-  ```sh
-  $ docker-compose up -d <service>
-  ```
-
-* Follow the logs
-
-  ```sh
-  $ docker-compose logs -f <service>
-  ```
-
-* Stop a service
-
-  ```sh
-  $ docker-compose stop <service>
-  ```
-
-* Remove the container (in case you want to reset any stored data)
-
-  ```sh
-  $ docker-compose rm <service>
-  ```
-
-* Restart a service
-
-  ```sh
-  $ docker-compose restart <service>
-  ```
-
-* Stop all services and clean up
-
-  ```sh
-  $ docker-compose down  
-  ```
-
 [prerequisites]: https://github.com/backstage-technical-services/hub/blob/master/docs/contributing/Developing.md#pre-requisites
 [contribution-guide]: https://github.com/backstage-technical-services/hub/blob/master/Contributing.md
 [development-tools]: https://github.com/backstage-technical-services/hub/blob/master/docs/Our%20Tools.md
 [slack]: https://bts-website.slack.com
 [smtp-ui]: http://localhost:6022
-[keycloak-account]: https://keycloak.bts-crew.com/auth/realms/nonprod/account
 

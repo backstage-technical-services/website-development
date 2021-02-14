@@ -2,11 +2,13 @@
 *
 !readme.md
 !.github/*
+.github_token
 
 # Repositories
 !repositories.json
 
 # Scripts
+!scripts/
 !scripts/*
 
 # IntelliJ

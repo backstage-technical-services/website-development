@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+set -eo pipefail
+
 repo_base_dir="$(pwd)/$(dirname $0)/.."
 cd "${repo_base_dir}"
 

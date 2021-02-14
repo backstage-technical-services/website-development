@@ -37,9 +37,6 @@ services:
     build:
       context: laravel-site
       dockerfile: .docker/local.Dockerfile
-      args:
-        USER_ID: 1000
-        GROUP_ID: 1000
     container_name: bts-v4-site
     networks:
       - main
@@ -50,5 +47,7 @@ services:
     depends_on:
       - database
       - mail
-    restart: always
+    environment:
+      PORT_NGINX: 8080
+    restart: on-failure
     mem_limit: 512m
